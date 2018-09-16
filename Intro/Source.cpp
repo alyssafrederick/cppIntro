@@ -25,6 +25,82 @@ void divide(int num1, int num2, int* answer)
 }
 
 
+class list
+{
+public:
+	int size = 0;
+	string* items = new string[0];
+
+	void view()
+	{
+		for (int i = 0; i < size; i++)
+		{
+			cout << "	" << items[i] << endl;
+		}
+	}
+
+	void add(string toadd)
+	{
+		if (size == 0)
+		{
+			resize(1);
+			items[0] = toadd;
+		}
+		else
+		{
+			resize(size + 1);
+			items[size - 1] = toadd;
+		}
+	}
+
+	void remove(string toremove)
+	{
+		int indexToRemove = search(toremove);
+
+		string* temp = new string[size - 1];
+		for (int i = 0; i < size; i++)
+		{
+			if (i == indexToRemove)
+			{
+				//get out of if and dont return this val. but dont get out of for  !!!!!!!!!!!!!!
+			}
+			temp[i] = items[i];
+		}
+	}
+
+	int search(string toseach)
+	{
+		for (int i = 0; i < size; i++)
+		{
+			if (items[i] == toseach)
+			{
+				return i;
+			}
+		}
+		return -1;
+	}
+
+
+private:
+	void resize(int newSize)
+	{
+		string* temp = new string[newSize];
+
+		if (size > 1)
+		{
+			for (int i = 0; i < size; i++)
+			{
+				temp[i] = items[i];
+			}
+		}
+		items = temp;
+
+		size = newSize;
+	}
+
+};
+
+
 int main()
 {
 	/*
@@ -155,49 +231,69 @@ int main()
 
 	//shopping list
 	cout << "SHOPPING LIST" << endl;
-	//make list 
+	list shoppingList;
 
-	cout << "Some actions you can take to update your shopping list..." << endl;
-	cout << "	'add' = add items to your list" << endl;
-	cout << "	'delete' = delete items from your list" << endl;
-	cout << "	'view' = see all of the items in you r list" << endl;
-	cout << "	'new' = creates a new empty list" << endl;
-	cout << "	'done' = prints the items in your list and does not allow any other edits" << endl;
-	cout << "so, what action would you like to perform to your shopping list?" << endl;
 	string action;
-	cin >> action;
 
-	while (action != "done")
+	while (action != "done!")
 	{
+		cout << "Some actions you can take to update your shopping list..." << endl;
+		cout << "	'add' = add items to your list" << endl;
+		cout << "	'delete' = delete items from your list" << endl;
+		cout << "	'view' = see all of the items in your list" << endl;
+		cout << "	'new' = creates a new empty list" << endl;
+		cout << "	'done!' = prints the items in your list and does not allow any other edits" << endl;
+		cout << "so, what action would you like to perform to your shopping list?" << endl;
+		cin >> action;
+
 		if (action == "new")
 		{
-
+			list temp;
+			shoppingList = temp;
 		}
 		else if (action == "view")
 		{
-
+			shoppingList.view();
 		}
 		else if (action == "add")
 		{
+			string toadd;
+			cout << "when you are done adding say 'done'" << endl;
 
+			while (toadd != "done")
+			{
+				shoppingList.add(toadd);
+				cout << "what item would you like to add to your list?" << endl;
+				cin >> toadd;
+			}
 		}
 		else if (action == "delete")
 		{
+			string todelete;
+			cout << "when you are done adding say 'done'" << endl;
 
+			while (todelete != "done")
+			{
+				shoppingList.remove(todelete);
+				cout << "what item would you like to delete from your list?" << endl;
+				cin >> todelete;
+			}
 		}
 		else
 		{
+			if (action == "done!")
+			{
+				break;
+			}
 			cout << "that is not one of the functions I can perform" << endl;
-			cout << "however, I can perform 'add', 'delete', 'view', 'new', and 'done'" << endl;
+			cout << "however, I can perform 'add', 'delete', 'view', 'new', and 'done!'" << endl;
 			cout << "what action would you like to take?" << endl;
 			cin >> action;
 		}
-	}
-
-	if (action == "done")
-	{
 
 	}
+
+	shoppingList.view();
 
 
 	system("pause");
