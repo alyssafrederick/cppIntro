@@ -4,29 +4,30 @@
 
 using namespace std;
 
-int add(int num1, int num2)
+void add(int num1, int num2, int* answer)
 {
-	return num1 + num2;
+	(*answer) = num1 + num2;
 }
 
-int subtract(int num1, int num2)
+void subtract(int num1, int num2, int* answer)
 {
-	return num1 - num2;
+	(*answer) = num1 - num2;
 }
 
-int multiply(int num1, int num2)
+void multiply(int num1, int num2, int* answer)
 {
-	return num1 * num2;
+	(*answer) = num1 * num2;
 }
 
-int divide(int num1, int num2)
+void divide(int num1, int num2, int* answer)
 {
-	return num1 / num2;
+	(*answer) = num1 / num2;
 }
 
 
 int main()
 {
+	/*
 	//hello world
 	cout << "enter your name: ";
 	string word;
@@ -130,26 +131,74 @@ int main()
 	string op;
 	cin >> op;
 
-	int answer;
+	int* answer = new int(0);
+
 	if (op == "+")
 	{
-		answer = add(num1, num2);
+		add(num1, num2, answer);
 	}
 	else if (op == "-")
 	{
-		answer = subtract(num1, num2);
+		subtract(num1, num2, answer);
 	}
 	else if (op == "*")
 	{
-		answer = multiply(num1, num2);
+		multiply(num1, num2, answer);
 	}
 	else if (op == "/")
 	{
-		answer = divide(num1, num2);
+		divide(num1, num2, answer);
 	}
-	cout << "the answer is " << answer << endl;
+	cout << "the answer is " << *answer << endl;
+	*/
 
-	//show pass by reference with her operation functions
+
+	//shopping list
+	cout << "SHOPPING LIST" << endl;
+	//make list 
+
+	cout << "Some actions you can take to update your shopping list..." << endl;
+	cout << "	'add' = add items to your list" << endl;
+	cout << "	'delete' = delete items from your list" << endl;
+	cout << "	'view' = see all of the items in you r list" << endl;
+	cout << "	'new' = creates a new empty list" << endl;
+	cout << "	'done' = prints the items in your list and does not allow any other edits" << endl;
+	cout << "so, what action would you like to perform to your shopping list?" << endl;
+	string action;
+	cin >> action;
+
+	while (action != "done")
+	{
+		if (action == "new")
+		{
+
+		}
+		else if (action == "view")
+		{
+
+		}
+		else if (action == "add")
+		{
+
+		}
+		else if (action == "delete")
+		{
+
+		}
+		else
+		{
+			cout << "that is not one of the functions I can perform" << endl;
+			cout << "however, I can perform 'add', 'delete', 'view', 'new', and 'done'" << endl;
+			cout << "what action would you like to take?" << endl;
+			cin >> action;
+		}
+	}
+
+	if (action == "done")
+	{
+
+	}
+
 
 	system("pause");
 	return 0;
