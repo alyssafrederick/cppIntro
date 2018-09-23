@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <time.h>
+#include <memory>
 
 using namespace std;
 
@@ -31,6 +32,10 @@ public:
 	int size = 0;
 	string* items = new string[0];
 
+	~list() {
+		delete[] items;
+	}
+
 	void view()
 	{
 		for (int i = 0; i < size; i++)
@@ -41,31 +46,42 @@ public:
 
 	void add(string toadd)
 	{
-		if (size == 0)
-		{
-			resize(1);
-			items[0] = toadd;
-		}
-		else
-		{
+		//if (size == 0)
+		//{
+		//	resize(1);
+		//	//items[0] = toadd;
+		//}
+		//else
+		//{
 			resize(size + 1);
 			items[size - 1] = toadd;
-		}
+		//}
 	}
 
 	void remove(string toremove)
 	{
 		int indexToRemove = search(toremove);
 
+		if (indexToRemove < 0)
+		{
+			return;
+		}
+
 		string* temp = new string[size - 1];
-		for (int i = 0; i < size; i++)
+		int count = 0;
+		for (int i = 0; i < size - 1; i++)
 		{
 			if (i == indexToRemove)
 			{
+				count++;
 				//get out of if and dont return this val. but dont get out of for  !!!!!!!!!!!!!!
 			}
-			temp[i] = items[i];
+			temp[i] = items[count];
+			count++;
 		}
+		size--;
+		delete[] items;
+		items = temp;
 	}
 
 	int search(string toseach)
@@ -86,13 +102,14 @@ private:
 	{
 		string* temp = new string[newSize];
 
-		if (size > 1)
+		if (newSize > 1)
 		{
 			for (int i = 0; i < size; i++)
 			{
 				temp[i] = items[i];
 			}
 		}
+		delete[] items;
 		items = temp;
 
 		size = newSize;
@@ -101,8 +118,35 @@ private:
 };
 
 
+class  MyClass {
+public:
+	MyClass() {
+		std::cout << "constructed" << std::endl;
+		items = new int[42];
+	}
+
+	~MyClass() {
+		std::cout << "deconstructed" << std::endl;
+		delete[] items;
+	}
+
+	int* items;
+};
+
+void TakesMyClass(MyClass cls) {
+	std::cout << cls.items << std::endl;
+}
+
+
 int main()
 {
+	{
+		MyClass cls;
+
+		TakesMyClass(cls);
+	}
+
+	system("PAUSE");
 	/*
 	//hello world
 	cout << "enter your name: ";
@@ -257,26 +301,39 @@ int main()
 		}
 		else if (action == "add")
 		{
+			bool done = false;
 			string toadd;
-			cout << "when you are done adding say 'done'" << endl;
+			cout << "when you are done adding items say 'done'" << endl;
 
-			while (toadd != "done")
+			while (!done)
 			{
-				shoppingList.add(toadd);
+				
 				cout << "what item would you like to add to your list?" << endl;
 				cin >> toadd;
+				if (toadd == "done")
+				{
+					done = true;
+					break;
+				}
+				shoppingList.add(toadd);
 			}
 		}
 		else if (action == "delete")
 		{
+			bool done = false;
 			string todelete;
-			cout << "when you are done adding say 'done'" << endl;
+			cout << "when you are done deleting items say 'done'" << endl;
 
 			while (todelete != "done")
 			{
-				shoppingList.remove(todelete);
 				cout << "what item would you like to delete from your list?" << endl;
 				cin >> todelete;
+				if (todelete == "done")
+				{
+					done = true;
+					break;
+				}
+				shoppingList.remove(todelete);
 			}
 		}
 		else
